@@ -3,9 +3,8 @@ import Header from './components/Header';
 import FilmGrid from './components/FilmGrid';
 import FilmModal from './components/FilmModal';
 import Loading from './components/Loading';
-import ErrorDisplay from './components/errorDisplay';
-import { fetchFilmsFromSheet, getUniqueValues, getUniqueYears } from './services/googleSheetsService';
-
+import ErrorDisplay from './components/ErrorDisplay';
+import { fetchFilmsFromSheet, getUniqueValues, getUniqueYears, getDurationCategory } from './services/googleSheetsService';
 
 export default function App() {
   const [films, setFilms] = useState([]);
@@ -15,6 +14,7 @@ export default function App() {
   const [selectedGenre, setSelectedGenre] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedDiscipline, setSelectedDiscipline] = useState('');
+  const [selectedDuration, setSelectedDuration] = useState('');
   const [selectedFilm, setSelectedFilm] = useState(null);
 
   useEffect(() => {
@@ -46,7 +46,10 @@ export default function App() {
     const matchesYear = !selectedYear || film['Ano'] === selectedYear;
     const matchesDiscipline = !selectedDiscipline || film['Disciplina'] === selectedDiscipline;
 
-    return matchesSearch && matchesGenre && matchesYear && matchesDiscipline;
+    const matchesDuration = !selectedDuration ||
+      getDurationCategory(film['Duração']) === selectedDuration;
+
+    return matchesSearch && matchesGenre && matchesYear && matchesDiscipline && matchesDuration;
   });
 
   if (loading) {
@@ -58,7 +61,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen  bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       <Header
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
@@ -68,9 +71,11 @@ export default function App() {
         selectedGenre={selectedGenre}
         selectedYear={selectedYear}
         selectedDiscipline={selectedDiscipline}
+        selectedDuration={selectedDuration}
         onGenreChange={setSelectedGenre}
         onYearChange={setSelectedYear}
         onDisciplineChange={setSelectedDiscipline}
+        onDurationChange={setSelectedDuration}
         resultCount={filteredFilms.length}
       />
 

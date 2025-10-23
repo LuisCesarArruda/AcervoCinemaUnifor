@@ -9,12 +9,15 @@ export default function Header({
     genres,
     years,
     disciplines,
+    durations,
     selectedGenre,
     selectedYear,
     selectedDiscipline,
+    selectedDuration,
     onGenreChange,
     onYearChange,
     onDisciplineChange,
+    onDurationChange,
     resultCount
 }) {
     return (
@@ -34,12 +37,15 @@ export default function Header({
                     genres={genres}
                     years={years}
                     disciplines={disciplines}
+                    durations={durations}
                     selectedGenre={selectedGenre}
                     selectedYear={selectedYear}
                     selectedDiscipline={selectedDiscipline}
+                    selectedDuration={selectedDuration}
                     onGenreChange={onGenreChange}
                     onYearChange={onYearChange}
                     onDisciplineChange={onDisciplineChange}
+                    onDurationChange={onDurationChange}
                 />
 
                 <p className="text-gray-400 text-sm mt-4">
