@@ -3,7 +3,7 @@ import Header from './components/Header';
 import FilmGrid from './components/FilmGrid';
 import FilmModal from './components/FilmModal';
 import Loading from './components/Loading';
-import ErrorDisplay from './components/ErrorDisplay';
+import ErrorDisplay from './components/errorDisplay';
 import { fetchFilmsFromSheet, getUniqueValues, getUniqueYears, getDurationCategory } from './services/googleSheetsService';
 
 export default function App() {
