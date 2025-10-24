@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Play, Film as FilmIcon, Award } from 'lucide-react';
-import tema from "../../public/aguasPassadas.png"
+
 
 // Função para converter link do Google Drive em link de imagem direto
 const getDirectImageUrl = (driveUrl) => {
@@ -38,7 +38,7 @@ export default function FilmModal({ film, onClose }) {
                     {posterUrl ? (
                         <img
                             src={posterUrl}
-                            alt={tema}
+                            alt={posterUrl}
                             className="absolute inset-0 w-full h-full object-cover"
                             onError={(e) => {
                                 e.target.style.display = 'none';
