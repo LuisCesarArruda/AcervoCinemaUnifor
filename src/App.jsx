@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
-import FilmGrid from './components/FilmGrid';
+import HeroSection from './components/HeroSection';
+import FilmRows from './components/FilmRows';
 import FilmModal from './components/FilmModal';
 import Loading from './components/Loading';
-import ErrorDisplay from './components/errorDisplay';
+import ErrorDisplay from './components/ErrorDisplay';
 import { fetchFilmsFromSheet, getUniqueValues, getUniqueYears, getDurationCategory } from './services/googleSheetsService';
 
 export default function App() {
@@ -16,9 +17,17 @@ export default function App() {
   const [selectedDiscipline, setSelectedDiscipline] = useState('');
   const [selectedDuration, setSelectedDuration] = useState('');
   const [selectedFilm, setSelectedFilm] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     loadFilms();
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const loadFilms = async () => {
@@ -45,11 +54,19 @@ export default function App() {
     const matchesGenre = !selectedGenre || film['Gênero'] === selectedGenre;
     const matchesYear = !selectedYear || film['Ano'] === selectedYear;
     const matchesDiscipline = !selectedDiscipline || film['Disciplina'] === selectedDiscipline;
-
-    const matchesDuration = !selectedDuration ||
-      getDurationCategory(film['Duração']) === selectedDuration;
+    const matchesDuration = !selectedDuration || getDurationCategory(film['Duração']) === selectedDuration;
 
     return matchesSearch && matchesGenre && matchesYear && matchesDiscipline && matchesDuration;
+  });
+
+  // Agrupar filmes por gênero
+  const filmsByGenre = {};
+  filteredFilms.forEach(film => {
+    const genre = film['Gênero'] || 'Outros';
+    if (!filmsByGenre[genre]) {
+      filmsByGenre[genre] = [];
+    }
+    filmsByGenre[genre].push(film);
   });
 
   if (loading) {
@@ -60,9 +77,15 @@ export default function App() {
     return <ErrorDisplay error={error} />;
   }
 
+  const featuredFilm = filteredFilms[161];
+
+  // Verifica se tem filtros ativos
+  const hasActiveFilters = searchTerm || selectedGenre || selectedYear || selectedDiscipline || selectedDuration;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    <div className="min-h-screen bg-black text-white">
       <Header
+        scrolled={scrolled}
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
         genres={genres}
@@ -76,15 +99,21 @@ export default function App() {
         onYearChange={setSelectedYear}
         onDisciplineChange={setSelectedDiscipline}
         onDurationChange={setSelectedDuration}
-        resultCount={filteredFilms.length}
       />
 
-      <main className="container mx-auto px-4 py-8">
-        <FilmGrid
-          films={filteredFilms}
+      {featuredFilm && !hasActiveFilters && (
+        <HeroSection
+          film={featuredFilm}
+          onPlayClick={() => setSelectedFilm(featuredFilm)}
+        />
+      )}
+
+      <div className={hasActiveFilters ? 'pt-50' : ''}>
+        <FilmRows
+          filmsByGenre={filmsByGenre}
           onFilmClick={setSelectedFilm}
         />
-      </main>
+      </div>
 
       <FilmModal
         film={selectedFilm}

@@ -11,7 +11,7 @@ export const fetchFilmsFromSheet = async () => {
             throw new Error('Configure a VITE_SPREADSHEET_ID no arquivo .env');
         }
 
-        const range = 'A:AH';
+        const range = 'A:AO';
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
 
         const response = await fetch(url);
@@ -65,7 +65,7 @@ export const parseDuration = (durationStr) => {
         return mins + (secs / 60);
     }
 
- 
+
     const minOnlyMatch = str.match(/(\d+)'/);
     if (minOnlyMatch) {
         return parseInt(minOnlyMatch[1]) || 0;
