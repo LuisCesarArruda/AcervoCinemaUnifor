@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Play, Plus, ThumbsUp, ChevronDown, Film as FilmIcon } from 'lucide-react';
+import { Play, Film as FilmIcon } from 'lucide-react';
 
-// Função para converter link do Google Drive em link de imagem direto
 const getDirectImageUrl = (driveUrl) => {
     if (!driveUrl) return null;
 

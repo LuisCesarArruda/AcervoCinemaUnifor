@@ -2,7 +2,6 @@ import React from 'react';
 import { X, Play, Film as FilmIcon, Award } from 'lucide-react';
 
 
-// Função para converter link do Google Drive em link de imagem direto
 const getDirectImageUrl = (driveUrl) => {
     if (!driveUrl) return null;
 
@@ -32,9 +31,9 @@ export default function FilmModal({ film, onClose }) {
                 className="relative w-full max-w-4xl mt-8 mb-8 bg-gray-900 rounded-lg shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Hero Section */}
+
                 <div className="relative h-[60vh] rounded-t-lg overflow-hidden">
-                    {/* Background Image or Gradient */}
+
                     {posterUrl ? (
                         <img
                             src={posterUrl}
@@ -47,7 +46,6 @@ export default function FilmModal({ film, onClose }) {
                         />
                     ) : null}
 
-                    {/* Fallback Background */}
                     <div
                         className="absolute inset-0 bg-gradient-to-br from-red-900 to-purple-900"
                         style={{ display: posterUrl ? 'none' : 'block' }}
@@ -57,10 +55,8 @@ export default function FilmModal({ film, onClose }) {
                         </div>
                     </div>
 
-                    {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
 
-                    {/* Close Button */}
                     <button
                         onClick={onClose}
                         className="absolute cursor-pointer top-4 right-4 z-10 bg-black/80 rounded-full p-2 hover:bg-black transition"
@@ -68,7 +64,6 @@ export default function FilmModal({ film, onClose }) {
                         <X className="w-6 h-6" />
                     </button>
 
-                    {/* Content Over Image */}
                     <div className="absolute bottom-0 left-0 right-0 p-8">
                         <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
                             {film['Título']}
@@ -93,9 +88,7 @@ export default function FilmModal({ film, onClose }) {
 
                 <div className="p-8">
                     <div className="grid md:grid-cols-3 gap-8">
-                        {/* Left Column */}
                         <div className="md:col-span-2">
-                            {/* Info Row */}
                             <div className="flex items-center gap-4 mb-6 text-sm">
                                 {film['Ano'] && (
                                     <span className="text-green-500 font-semibold">{film['Ano']}</span>
@@ -109,15 +102,12 @@ export default function FilmModal({ film, onClose }) {
                                     </span>
                                 )}
                             </div>
-
-                            {/* Synopsis */}
                             {film['Sinopse'] && (
                                 <p className="text-gray-300 leading-relaxed mb-6">
                                     {film['Sinopse']}
                                 </p>
                             )}
 
-                            {/* Cast */}
                             {film['Elenco'] && (
                                 <div className="mb-4">
                                     <span className="text-gray-500 text-sm">Elenco: </span>
@@ -125,7 +115,6 @@ export default function FilmModal({ film, onClose }) {
                                 </div>
                             )}
 
-                            {/* Keywords */}
                             {film['Palavras-chaves'] && (
                                 <div className="flex flex-wrap gap-2 mt-6">
                                     {film['Palavras-chaves'].split(',').map((keyword, i) => (
@@ -137,7 +126,6 @@ export default function FilmModal({ film, onClose }) {
                             )}
                         </div>
 
-                        {/* Right Column */}
                         <div className="space-y-4 text-sm">
                             {film['Direção'] && (
                                 <div>

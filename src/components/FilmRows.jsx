@@ -34,7 +34,7 @@ function FilmRow({ title, films, onFilmClick }) {
             <h2 className="text-xl md:text-2xl font-bold mb-4 px-4">{title}</h2>
 
             <div className="relative group">
-                {/* Scroll Button Left */}
+
                 <button
                     onClick={() => scroll('left')}
                     className="absolute cursor-pointer left-0 top-0 bottom-0 z-10 w-12 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-black/90"
@@ -42,7 +42,6 @@ function FilmRow({ title, films, onFilmClick }) {
                     <ChevronLeft className="w-8 h-8" />
                 </button>
 
-                {/* Films Container */}
                 <div
                     ref={rowRef}
                     className="flex gap-2 overflow-x-scroll scrollbar-hide scroll-smooth px-4"
@@ -57,7 +56,6 @@ function FilmRow({ title, films, onFilmClick }) {
                     ))}
                 </div>
 
-                {/* Scroll Button Right */}
                 <button
                     onClick={() => scroll('right')}
                     className="absolute cursor-pointer right-0 top-0 bottom-0 z-10 w-12 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-black/90"

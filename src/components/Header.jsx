@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Search, Film, X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
+import logo from "../../public/Icone Unifor Azul.png"
 
 export default function Header({
     scrolled,
@@ -25,15 +26,14 @@ export default function Header({
             }`}>
             <div className="container mx-auto px-4 md:px-8 py-4">
                 <div className="flex items-center justify-between">
-                    {/* Logo */}
+
                     <div className="flex items-center gap-8">
                         <div className="flex items-center gap-2">
-                            <img src="../../public/Icone Unifor Azul.png" alt="Logo Unifor" className="w-8 h-8" />
+                            <img src={logo} alt="Logo Unifor" className="w-8 h-8" />
                             
                             <h1 className="text-2xl font-bold">UNIFOR</h1>
                         </div>
 
-                        {/* Nav Desktop */}
                         <nav className="hidden  md:flex items-center gap-6 text-sm">
                             <button
                                 onClick={() => {
@@ -56,7 +56,6 @@ export default function Header({
                         </nav>
                     </div>
 
-                    {/* Search */}
                     <div className="flex items-center gap-4">
                         {showSearch ? (
                             <div className="flex items-center bg-black border border-white">
@@ -85,7 +84,6 @@ export default function Header({
                 </div>
             </div>
 
-            {/* Filtros Dropdown - FORA do container principal */}
             {showFilters && (
                 <div className="w-full bg-black border-t border-gray-800">
                     <div className="container mx-auto px-4 md:px-8 py-4">
@@ -135,7 +133,6 @@ export default function Header({
                             </select>
                         </div>
 
-                        {/* Indicador de filtros ativos */}
                         {(selectedGenre || selectedYear || selectedDiscipline || selectedDuration) && (
                             <div className="mt-3 flex items-center gap-2 text-sm">
                                 <span className="text-gray-400">Filtros ativos:</span>

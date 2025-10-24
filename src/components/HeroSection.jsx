@@ -1,16 +1,13 @@
 import React from 'react';
 import { Play, Info } from 'lucide-react';
 
-// Função para converter link do Google Drive em link de imagem direto
 const getDirectImageUrl = (driveUrl) => {
     if (!driveUrl) return null;
 
-    // Se já for um link direto, retorna
     if (driveUrl.includes('uc?id=') || driveUrl.includes('thumbnail')) {
         return driveUrl;
     }
 
-    // Extrai o ID do link do Drive
     const match = driveUrl.match(/[-\w]{25,}/);
     if (match) {
         return `https://drive.google.com/thumbnail?id=${match[0]}&sz=w1000`;
@@ -24,7 +21,7 @@ export default function HeroSection({ film, onPlayClick }) {
 
     return (
         <div className="relative h-[80vh] w-full">
-            {/* Background Image */}
+
             {posterUrl ? (
                 <div
                     className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -34,15 +31,14 @@ export default function HeroSection({ film, onPlayClick }) {
                 <div className="absolute inset-0 bg-gradient-to-r from-red-900/20 to-purple-900/20" />
             )}
 
-            {/* Overlays */}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
 
-            {/* Content */}
+
             <div className="relative h-full flex items-center">
                 <div className="container mx-auto px-4 md:px-8">
                     <div className="max-w-2xl">
-                        {/* Badge */}
+
                         <div className="flex items-center gap-2 mb-4">
                             <span className="bg-red-600 text-white px-3 py-1 text-xs font-bold rounded">
                                 DESTAQUE
@@ -55,12 +51,10 @@ export default function HeroSection({ film, onPlayClick }) {
                             )}
                         </div>
 
-                        {/* Title */}
                         <h1 className="text-5xl md:text-7xl font-bold mb-4 drop-shadow-lg">
                             {film['Título']}
                         </h1>
 
-                        {/* Info */}
                         <div className="flex items-center gap-4 mb-6 text-sm text-gray-300">
                             {film['Gênero'] && (
                                 <span className="font-semibold text-white">{film['Gênero']}</span>
@@ -78,15 +72,12 @@ export default function HeroSection({ film, onPlayClick }) {
                                 </>
                             )}
                         </div>
-
-                        {/* Synopsis */}
                         {film['Sinopse'] && (
                             <p className="text-lg text-gray-200 mb-8 line-clamp-3 max-w-xl drop-shadow-lg">
                                 {film['Sinopse']}
                             </p>
                         )}
 
-                        {/* Buttons */}
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={onPlayClick}
@@ -104,7 +95,6 @@ export default function HeroSection({ film, onPlayClick }) {
                             </button>
                         </div>
 
-                        {/* Credits */}
                         {film['Direção'] && (
                             <div className="mt-8 text-sm text-gray-400">
                                 <span className="font-semibold">Direção:</span> {film['Direção']}
