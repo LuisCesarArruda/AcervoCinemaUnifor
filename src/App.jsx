@@ -4,7 +4,7 @@ import HeroSection from './components/HeroSection';
 import FilmRows from './components/FilmRows';
 import FilmModal from './components/FilmModal';
 import Loading from './components/Loading';
-import ErrorDisplay from './components/ErrorDisplay';
+import ErrorDisplay from './components/ErrorDisplay.jsx';
 import { fetchFilmsFromSheet, getUniqueValues, getUniqueYears, getDurationCategory } from './services/googleSheetsService';
 
 export default function App() {
