@@ -4,7 +4,7 @@ import HeroSection from './components/HeroSection';
 import FilmRows from './components/FilmRows';
 import FilmModal from './components/FilmModal';
 import Loading from './components/Loading';
-import ErrorDisplay from './components/ErrorDisplay.jsx';
+import ErrorDisplay from './components/ErrorDisplay';
 import { fetchFilmsFromSheet, getUniqueValues, getUniqueYears, getDurationCategory } from './services/googleSheetsService';
 
 export default function App() {
@@ -76,8 +76,9 @@ export default function App() {
   if (error) {
     return <ErrorDisplay error={error} />;
   }
+  const randomIndex = Math.floor(Math.random() * filteredFilms.length);
+  const featuredFilm = filteredFilms[randomIndex]
 
-  const featuredFilm = filteredFilms[161];
 
   // Verifica se tem filtros ativos
   const hasActiveFilters = searchTerm || selectedGenre || selectedYear || selectedDiscipline || selectedDuration;

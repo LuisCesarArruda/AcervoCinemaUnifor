@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from "../../public/LogoLabomidiaVerticalLABOVermelho0.5xPNG.png"
+import logo from "../assets/LogoLabomidiaVerticalLABOVermelho0.5xPNG.png"
 
 
 export default function Loading() {

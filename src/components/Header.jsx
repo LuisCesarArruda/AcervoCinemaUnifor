@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, X } from 'lucide-react';
-import logo from "../../public/Icone Unifor Azul.png"
+import logo from "../assets/Icone Unifor Azul.png"
 
 export default function Header({
     scrolled,
