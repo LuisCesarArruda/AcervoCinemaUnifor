@@ -70,9 +70,9 @@ export default function FilmModal({ film, onClose }) {
                         </h1>
 
                         <div className="flex items-center gap-4 mb-6">
-                            {film['Link (ANTIGO)'] && (
+                            {film['Link'] && (
                                 <a
-                                    href={film['Link (ANTIGO)']}
+                                    href={film['Link']}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-2 bg-white text-black px-8 py-2 rounded font-bold hover:bg-gray-200 transition"
