@@ -18,6 +18,8 @@ export default function App() {
   const [selectedDuration, setSelectedDuration] = useState('');
   const [selectedFilm, setSelectedFilm] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [featuredFilm, setFeaturedFilm] = useState(null);
+  const [selectedSubGenre, setselectedSubGenre] =useState("")
 
   useEffect(() => {
     loadFilms();
@@ -29,11 +31,17 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+  useEffect(() => {
+    if (films.length > 0 && !featuredFilm) {
+      const randomIndex = Math.floor(Math.random() * films.length);
+      setFeaturedFilm(films[randomIndex]);
+    }
+  }, [films, featuredFilm]);
   const loadFilms = async () => {
     try {
       const data = await fetchFilmsFromSheet();
       setFilms(data);
+
       setLoading(false);
     } catch (err) {
       setError(err.message);
@@ -42,6 +50,7 @@ export default function App() {
   };
 
   const genres = getUniqueValues(films, 'Gênero');
+  const subGenres = getUniqueValues(films, 'Subgênero');
   const years = getUniqueYears(films);
   const disciplines = getUniqueValues(films, 'Disciplina');
 
@@ -49,14 +58,17 @@ export default function App() {
     const matchesSearch =
       film['Título']?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       film['Sinopse']?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      film['Palavras-chaves']?.toLowerCase().includes(searchTerm.toLowerCase());
+      film['Palavras-chaves']?.toLowerCase().includes(searchTerm.toLowerCase())||
+      film['Direção']?.toLowerCase().includes(searchTerm.toLowerCase())||
+      film['Subgênero']?.toLowerCase().includes(searchTerm.toLowerCase())
 
     const matchesGenre = !selectedGenre || film['Gênero'] === selectedGenre;
+    const matchesSubGenre = !selectedSubGenre|| film['Subgênero'] === selectedSubGenre;
     const matchesYear = !selectedYear || film['Ano'] === selectedYear;
     const matchesDiscipline = !selectedDiscipline || film['Disciplina'] === selectedDiscipline;
     const matchesDuration = !selectedDuration || getDurationCategory(film['Duração']) === selectedDuration;
 
-    return matchesSearch && matchesGenre && matchesYear && matchesDiscipline && matchesDuration;
+    return matchesSearch && matchesGenre && matchesYear && matchesDiscipline && matchesDuration && matchesSubGenre;
   });
 
   // Agrupar filmes por gênero
@@ -68,6 +80,14 @@ export default function App() {
     }
     filmsByGenre[genre].push(film);
   });
+  const filmsBySubGenre = {};
+  filteredFilms.forEach(film => {
+    const subGenre = film['Subgênero'] || 'Outros';
+    if (!filmsBySubGenre[subGenre]) {
+      filmsBySubGenre[subGenre] = [];
+    }
+    filmsBySubGenre[subGenre].push(film);
+  });
 
   if (loading) {
     return <Loading />;
@@ -76,12 +96,11 @@ export default function App() {
   if (error) {
     return <ErrorDisplay error={error} />;
   }
-  const randomIndex = Math.floor(Math.random() * filteredFilms.length);
-  const featuredFilm = filteredFilms[randomIndex]
+  
 
 
   // Verifica se tem filtros ativos
-  const hasActiveFilters = searchTerm || selectedGenre || selectedYear || selectedDiscipline || selectedDuration;
+  const hasActiveFilters = searchTerm || selectedSubGenre || selectedYear || selectedDiscipline || selectedDuration;
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -89,14 +108,14 @@ export default function App() {
         scrolled={scrolled}
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
-        genres={genres}
+        subGenres={subGenres}
         years={years}
         disciplines={disciplines}
-        selectedGenre={selectedGenre}
+        selectedSubGenre={selectedSubGenre}
         selectedYear={selectedYear}
         selectedDiscipline={selectedDiscipline}
         selectedDuration={selectedDuration}
-        onGenreChange={setSelectedGenre}
+        onSubGenreChange={setselectedSubGenre}
         onYearChange={setSelectedYear}
         onDisciplineChange={setSelectedDiscipline}
         onDurationChange={setSelectedDuration}
@@ -109,7 +128,7 @@ export default function App() {
         />
       )}
 
-      <div className={hasActiveFilters ? 'pt-50' : ''}>
+      <div className={hasActiveFilters ? 'pt-70' : ''}>
         <FilmRows
           filmsByGenre={filmsByGenre}
           onFilmClick={setSelectedFilm}

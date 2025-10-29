@@ -1,34 +1,33 @@
 import React from 'react';
 
 export default function Filters({
-    genres,
+    subGenres,
     years,
     disciplines,
-    durations,
-    selectedGenre,
+    selectedSubGenre,
     selectedYear,
     selectedDiscipline,
     selectedDuration,
-    onGenreChange,
+    onSubGenreChange,
     onYearChange,
     onDisciplineChange,
     onDurationChange
 }) {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid p-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 ">
             <select
-                className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"
-                value={selectedGenre}
-                onChange={(e) => onGenreChange(e.target.value)}
+                className="bg-gray-800 cursor-pointer  border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"
+                value={selectedSubGenre}
+                onChange={(e) => onSubGenreChange(e.target.value)}
             >
-                <option value="">Todos os gêneros</option>
-                {genres.map(genre => (
-                    <option key={genre} value={genre}>{genre}</option>
+                <option value="">SubGênero</option>
+                {subGenres.map(subgenre => (
+                    <option key={subgenre} value={subgenre}>{subgenre}</option>
                 ))}
             </select>
 
             <select
-                className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"
+                className="bg-gray-800 border cursor-pointer border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"
                 value={selectedYear}
                 onChange={(e) => onYearChange(e.target.value)}
             >
@@ -39,7 +38,7 @@ export default function Filters({
             </select>
 
             <select
-                className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"
+                className="bg-gray-800 border cursor-pointer border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"
                 value={selectedDiscipline}
                 onChange={(e) => onDisciplineChange(e.target.value)}
             >
@@ -50,7 +49,7 @@ export default function Filters({
             </select>
 
             <select
-                className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"
+                className="bg-gray-800 border cursor-pointer border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"
                 value={selectedDuration}
                 onChange={(e) => onDurationChange(e.target.value)}
             >
