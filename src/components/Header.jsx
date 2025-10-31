@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, X } from 'lucide-react';
-import logo from "../assets/Icone Unifor Azul.png"
+import logo from "../assets/LogoLabomidiaAtivo 1.png"
 import Filters from './Filters';
 
 export default function Header({
@@ -32,7 +32,7 @@ export default function Header({
                         <div className="flex items-center gap-2">
                             <img src={logo} alt="Logo Unifor" className="w-8 h-8" />
 
-                            <h1 className="text-2xl font-bold">UNIFOR</h1>
+                            <h1 className="text-2xl font-bold">LABOFLIX</h1>
                         </div>
 
                         <nav className="hidden  md:flex items-center gap-6 text-sm">
