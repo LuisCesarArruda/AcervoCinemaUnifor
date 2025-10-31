@@ -19,7 +19,7 @@ export default function App() {
   const [selectedFilm, setSelectedFilm] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [featuredFilm, setFeaturedFilm] = useState(null);
-  const [selectedSubGenre, setselectedSubGenre] =useState("")
+  const [selectedSubGenre, setselectedSubGenre] = useState("")
 
   useEffect(() => {
     loadFilms();
@@ -31,12 +31,26 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  // useEffect(() => {
+  //   if (films.length > 0 && !featuredFilm) {
+  //     const randomIndex = Math.floor(Math.random() * films.length);
+  //     setFeaturedFilm(films[randomIndex]);
+  //   }
+  // }, [films, featuredFilm]);
+
   useEffect(() => {
     if (films.length > 0 && !featuredFilm) {
-      const randomIndex = Math.floor(Math.random() * films.length);
-      setFeaturedFilm(films[randomIndex]);
+      const tccFilms = films.filter(film =>
+        film['Disciplina']?.toLowerCase().includes('tcc') ||
+        film['Categoria']?.toLowerCase().includes('tcc')
+      );
+
+      const filmsToChooseFrom = tccFilms.length > 0 ? tccFilms : films;
+      const randomIndex = Math.floor(Math.random() * filmsToChooseFrom.length);
+      setFeaturedFilm(filmsToChooseFrom[randomIndex]);
     }
   }, [films, featuredFilm]);
+
   const loadFilms = async () => {
     try {
       const data = await fetchFilmsFromSheet();
@@ -58,12 +72,12 @@ export default function App() {
     const matchesSearch =
       film['Título']?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       film['Sinopse']?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      film['Palavras-chaves']?.toLowerCase().includes(searchTerm.toLowerCase())||
-      film['Direção']?.toLowerCase().includes(searchTerm.toLowerCase())||
+      film['Palavras-chaves']?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      film['Direção']?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       film['Subgênero']?.toLowerCase().includes(searchTerm.toLowerCase())
 
     const matchesGenre = !selectedGenre || film['Gênero'] === selectedGenre;
-    const matchesSubGenre = !selectedSubGenre|| film['Subgênero'] === selectedSubGenre;
+    const matchesSubGenre = !selectedSubGenre || film['Subgênero'] === selectedSubGenre;
     const matchesYear = !selectedYear || film['Ano'] === selectedYear;
     const matchesDiscipline = !selectedDiscipline || film['Disciplina'] === selectedDiscipline;
     const matchesDuration = !selectedDuration || getDurationCategory(film['Duração']) === selectedDuration;
@@ -80,6 +94,7 @@ export default function App() {
     }
     filmsByGenre[genre].push(film);
   });
+
   const filmsBySubGenre = {};
   filteredFilms.forEach(film => {
     const subGenre = film['Subgênero'] || 'Outros';
@@ -96,7 +111,7 @@ export default function App() {
   if (error) {
     return <ErrorDisplay error={error} />;
   }
-  
+
 
 
   // Verifica se tem filtros ativos
