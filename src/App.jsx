@@ -63,7 +63,6 @@ export default function App() {
     }
   };
 
-  const genres = getUniqueValues(films, 'Gênero');
   const subGenres = getUniqueValues(films, 'Subgênero');
   const years = getUniqueYears(films);
   const disciplines = getUniqueValues(films, 'Disciplina');
@@ -85,7 +84,7 @@ export default function App() {
     return matchesSearch && matchesGenre && matchesYear && matchesDiscipline && matchesDuration && matchesSubGenre;
   });
 
-  // Agrupar filmes por gênero
+
   const filmsByGenre = {};
   filteredFilms.forEach(film => {
     const genre = film['Gênero'] || 'Outros';
@@ -113,8 +112,6 @@ export default function App() {
   }
 
 
-
-  // Verifica se tem filtros ativos
   const hasActiveFilters = searchTerm || selectedSubGenre || selectedYear || selectedDiscipline || selectedDuration;
 
   return (

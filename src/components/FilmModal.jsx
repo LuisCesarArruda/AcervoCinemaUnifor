@@ -115,15 +115,6 @@ export default function FilmModal({ film, onClose }) {
                                 </div>
                             )}
 
-                            {film['Palavras-chaves'] && (
-                                <div className="flex flex-wrap gap-2 mt-6">
-                                    {film['Palavras-chaves'].split(',').map((keyword, i) => (
-                                        <span key={i} className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-xs">
-                                            {keyword.trim()}
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
                         </div>
 
                         <div className="space-y-4 text-sm">
@@ -206,6 +197,7 @@ export default function FilmModal({ film, onClose }) {
                                     <span className="text-gray-300 text-xs">{film['Festivais/Premiações']}</span>
                                 </div>
                             )}
+                            
                         </div>
                     </div>
                 </div>

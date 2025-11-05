@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search, X, Menu } from 'lucide-react';
 import logo from "../assets/LogoLabomidiaAtivo 1.png"
 import Filters from './Filters';
 
@@ -21,6 +21,7 @@ export default function Header({
 }) {
     const [showSearch, setShowSearch] = useState(false);
     const [showFilters, setShowFilters] = useState(false);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
 
     return (
         <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black' : 'bg-gradient-to-b from-black to-transparent'
@@ -29,32 +30,38 @@ export default function Header({
                 <div className="flex items-center justify-between">
 
                     <div className="flex items-center gap-8">
+                        <button
+                            onClick={() => setShowMobileMenu(!showMobileMenu)}
+                            className="md:hidden"
+                        >
+                            <Menu className="w-6 h-6" />
+                        </button>
                         <div className="flex items-center gap-2">
                             <img src={logo} alt="Logo Unifor" className="w-8 h-8" />
 
                             <h1 className="text-2xl font-bold">LABOFLIX</h1>
                         </div>
 
-                        <nav className="hidden  md:flex items-center gap-6 text-sm">
+                        <nav className="hidden md:flex items-center gap-6 text-sm">
                             <button
                                 onClick={() => {
                                     onSubGenreChange('');
                                     onYearChange('');
                                     onDisciplineChange('');
-                                    onDurationChange('');
                                     setShowFilters(false);
                                 }}
-                                className="hover:text-gray-300 cursor-pointer transition"
+                                className="hover:text-gray-300 transition"
                             >
                                 Início
                             </button>
                             <button
                                 onClick={() => setShowFilters(!showFilters)}
-                                className={`hover:text-gray-300 cursor-pointer transition ${showFilters ? 'text-white font-bold' : ''}`}
+                                className={`hover:text-gray-300 transition ${showFilters ? 'text-white font-bold' : ''}`}
                             >
                                 {showFilters ? 'Fechar Filtros' : 'Filtros'}
                             </button>
                         </nav>
+
                     </div>
 
                     <div className="flex  items-center gap-4">
@@ -83,7 +90,34 @@ export default function Header({
                         )}
                     </div>
                 </div>
+
+                {showMobileMenu && (
+                    <div className="md:hidden mt-4 pb-4 border-b border-gray-800">
+                        <button
+                            onClick={() => {
+                                onSubGenreChange('');
+                                onYearChange('');
+                                onDisciplineChange('');
+                                setShowFilters(false);
+                                setShowMobileMenu(false);
+                            }}
+                            className="block w-full text-left py-2 hover:text-gray-300 transition"
+                        >
+                            Início
+                        </button>
+                        <button
+                            onClick={() => {
+                                setShowFilters(!showFilters);
+                                setShowMobileMenu(false);
+                            }}
+                            className={`block w-full text-left py-2 hover:text-gray-300 transition ${showFilters ? 'text-white font-bold' : ''}`}
+                        >
+                            {showFilters ? 'Fechar Filtros' : 'Filtros'}
+                        </button>
+                    </div>
+                )}
             </div>
+
 
             {showFilters && (
                 <div className="w-full bg-black border-t border-gray-800">
@@ -100,7 +134,7 @@ export default function Header({
                         onYearChange={onYearChange}
                         onDisciplineChange={onDisciplineChange}
                         onDurationChange={onDurationChange}
-                        
+
                     />
                     {(selectedSubGenre || selectedYear || selectedDiscipline || selectedDuration) && (
                         <div className="mt-3 flex items-center gap-2 text-sm">
