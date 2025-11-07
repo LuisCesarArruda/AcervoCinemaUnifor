@@ -1,6 +1,5 @@
-import React from 'react';
-import { X, Play, Film as FilmIcon, Award } from 'lucide-react';
-
+import React, { useState } from 'react';
+import { X, Play, Film as FilmIcon, Award, ChevronDown } from 'lucide-react';
 
 const getDirectImageUrl = (driveUrl) => {
     if (!driveUrl) return null;
@@ -18,6 +17,8 @@ const getDirectImageUrl = (driveUrl) => {
 };
 
 export default function FilmModal({ film, onClose }) {
+    const [showMoreInfo, setShowMoreInfo] = useState(false);
+
     if (!film) return null;
 
     const posterUrl = getDirectImageUrl(film['IMAGEM']);
@@ -31,9 +32,7 @@ export default function FilmModal({ film, onClose }) {
                 className="relative w-full max-w-4xl mt-8 mb-8 bg-gray-900 rounded-lg shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
             >
-
                 <div className="relative h-[60vh] rounded-t-lg overflow-hidden">
-
                     {posterUrl ? (
                         <img
                             src={posterUrl}
@@ -47,7 +46,7 @@ export default function FilmModal({ film, onClose }) {
                     ) : null}
 
                     <div
-                        className="absolute inset-0 bg-gradient-to-br from-red-900 to-purple-900"
+                        className="absolute inset-0 bg-linear-to-br from-red-900 to-purple-900"
                         style={{ display: posterUrl ? 'none' : 'block' }}
                     >
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -55,7 +54,7 @@ export default function FilmModal({ film, onClose }) {
                         </div>
                     </div>
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent" />
 
                     <button
                         onClick={onClose}
@@ -81,7 +80,6 @@ export default function FilmModal({ film, onClose }) {
                                     Assistir
                                 </a>
                             )}
-                            
                         </div>
                     </div>
                 </div>
@@ -114,7 +112,6 @@ export default function FilmModal({ film, onClose }) {
                                     <span className="text-gray-300 text-sm">{film['Elenco']}</span>
                                 </div>
                             )}
-
                         </div>
 
                         <div className="space-y-4 text-sm">
@@ -197,11 +194,152 @@ export default function FilmModal({ film, onClose }) {
                                     <span className="text-gray-300 text-xs">{film['Festivais/Premiações']}</span>
                                 </div>
                             )}
-                            
+
+                            <button
+                                onClick={() => setShowMoreInfo(!showMoreInfo)}
+                                className="cursor-pointer w-full flex items-center justify-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded transition mt-4"
+                            >
+                                <span className="text-sm font-semibold">
+                                    {showMoreInfo ? 'Menos Informações' : 'Mais Informações'}
+                                </span>
+                                <ChevronDown className={`w-4 h-4 transition-transform ${showMoreInfo ? 'rotate-180' : ''}`} />
+                            </button>
                         </div>
                     </div>
+
+                    {showMoreInfo && (
+                        <div className="mt-6 pt-6 border-t border-gray-700 space-y-4 text-sm animate-fadeIn">
+                            <h3 className="text-lg font-bold text-white mb-4">Informações Técnicas Completas</h3>
+
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {/* Coluna 1 */}
+                                <div className="space-y-3">
+                                    {film['Assistência de Direção'] && (
+                                        <div>
+                                            <span className="text-gray-500">Assistente de Direção: </span>
+                                            <span className="text-gray-300">{film['Assistência de Direção']}</span>
+                                        </div>
+                                    )}
+                                    {film['Assistência de Produção'] && (
+                                        <div>
+                                            <span className="text-gray-500">Assistente de Direção: </span>
+                                            <span className="text-gray-300">{film['Assistência de Direção']}</span>
+                                        </div>
+                                    )}
+                                    {film['Assistência de câmera'] && (
+                                        <div>
+                                            <span className="text-gray-500">Assistência de Câmera: </span>
+                                            <span className="text-gray-300">{film['Assistência de câmera']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Direção de Arte'] && (
+                                        <div>
+                                            <span className="text-gray-500">Direção de Arte: </span>
+                                            <span className="text-gray-300">{film['Direção de Arte']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Assistência de arte'] && (
+                                        <div>
+                                            <span className="text-gray-500">Assistência de Arte: </span>
+                                            <span className="text-gray-300">{film['Assistência de arte']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Gaffer'] && (
+                                        <div>
+                                            <span className="text-gray-500">Gaffer: </span>
+                                            <span className="text-gray-300">{film['Gaffer']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Maquiagem'] && (
+                                        <div>
+                                            <span className="text-gray-500">Maquiagem: </span>
+                                            <span className="text-gray-300">{film['Maquiagem']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Figurino'] && (
+                                        <div>
+                                            <span className="text-gray-500">Figurino: </span>
+                                            <span className="text-gray-300">{film['Figurino']}</span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="space-y-3">
+                                    {film['Técnico(a) de som'] && (
+                                        <div>
+                                            <span className="text-gray-500">Técnico de Som: </span>
+                                            <span className="text-gray-300">{film['Técnico(a) de som']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Microfonista'] && (
+                                        <div>
+                                            <span className="text-gray-500">Microfonista: </span>
+                                            <span className="text-gray-300">{film['Microfonista']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Edição de som'] && (
+                                        <div>
+                                            <span className="text-gray-500">Edição de Som: </span>
+                                            <span className="text-gray-300">{film['Edição de som']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Mixagem'] && (
+                                        <div>
+                                            <span className="text-gray-500">Mixagem: </span>
+                                            <span className="text-gray-300">{film['Mixagem']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Trilha original'] && (
+                                        <div>
+                                            <span className="text-gray-500">Trilha Original: </span>
+                                            <span className="text-gray-300">{film['Trilha original']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Colorização'] && (
+                                        <div>
+                                            <span className="text-gray-500">Colorização: </span>
+                                            <span className="text-gray-300">{film['Colorização']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['VFX / CGI'] && (
+                                        <div>
+                                            <span className="text-gray-500">VFX / CGI: </span>
+                                            <span className="text-gray-300">{film['VFX / CGI']}</span>
+                                        </div>
+                                    )}
+
+                                    {film['Continuidade'] && (
+                                        <div>
+                                            <span className="text-gray-500">Continuidade: </span>
+                                            <span className="text-gray-300">{film['Continuidade']}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {film['Outros membros da equipe'] && (
+                                <div className="mt-4 pt-4 border-t border-gray-800">
+                                    <span className="text-gray-500 block mb-2">Outros Membros da Equipe: </span>
+                                    <span className="text-gray-300">{film['Outros membros da equipe']}</span>
+                                </div>
+                            )}
+
+
+                        </div>
+                    )}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
